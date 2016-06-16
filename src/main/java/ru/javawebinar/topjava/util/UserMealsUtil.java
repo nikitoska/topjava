@@ -30,7 +30,7 @@ public class UserMealsUtil {
         System.out.println(getFilteredWithExceededByCycle(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
     }
 
-    public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+    public static List<UserMealWithExceed> getFilteredWithExceeded(Collection<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         Map<LocalDate, Integer> caloriesSumByDate = mealList.stream()
                 .collect(
                         Collectors.groupingBy(um -> um.getDateTime().toLocalDate(),
@@ -59,6 +59,6 @@ public class UserMealsUtil {
     }
 
     public static UserMealWithExceed createWithExceed(UserMeal um, boolean exceeded) {
-        return new UserMealWithExceed(um.getDateTime(), um.getDescription(), um.getCalories(), exceeded);
+        return new UserMealWithExceed(exceeded,um.getDateTime(), um.getDescription(), um.getCalories());
     }
 }

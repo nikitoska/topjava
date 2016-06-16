@@ -12,11 +12,24 @@ public class UserMeal {
     protected final String description;
 
     protected final int calories;
+    protected  Integer id;
 
-    public UserMeal(LocalDateTime dateTime, String description, int calories) {
+    public UserMeal(Integer id,LocalDateTime dateTime, String description, int calories) {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public UserMeal(LocalDateTime dateTime, String description, int calories) {
+        this(null, dateTime, description, calories);
     }
 
     public LocalDateTime getDateTime() {
