@@ -28,39 +28,17 @@ import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
-@ContextConfiguration({
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
-})
-@RunWith(SpringJUnit4ClassRunner.class)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(Profiles.ACTIVE_DB)
-public class UserMealServiceTest {
-    private static final Logger LOG = LoggerFactory.getLogger(UserMealServiceTest.class);;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+public abstract class AbstractUserMealServiceTest extends AbstractServiceTest {
 
-    @Rule
-    // http://stackoverflow.com/questions/14892125/what-is-the-best-practice-to-determine-the-execution-time-of-the-bussiness-relev
-    public Stopwatch stopwatch = new Stopwatch() {
-        private void logInfo(Description description, long nanos) {
-            LOG.info(String.format("+++ Test %s spent %d ms",
-                    description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos)));
-        }
 
-        @Override
-        protected void finished(long nanos, Description description) {
-            logInfo(description, nanos);
-        }
-    };
 
     @Autowired
     protected UserMealService service;
 
     @Test
     public void testDelete() throws Exception {
-        service.delete(MealTestData.MEAL1_ID, USER_ID);
+        service.delete(MEAL1_ID, USER_ID);
         MATCHER.assertCollectionEquals(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2), service.getAll(USER_ID));
     }
 
