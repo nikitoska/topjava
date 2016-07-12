@@ -88,4 +88,15 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest{
         service.update(updated.asUser());
         MATCHER.assertEquals(updated, service.get(USER_ID));
     }
+    @Test
+    public void testGetWithMeals() throws Exception{
+
+        User user = service.getWithMeals(USER_ID);
+        MATCHER.assertEquals(USER,user);
+    }
+    @Test(expected = NotFoundException.class)
+    public void testNotFoundWithMeals() throws Exception{
+        service.getWithMeals(1);
+    }
+
 }

@@ -92,4 +92,14 @@ public abstract class AbstractUserMealServiceTest extends AbstractServiceTest {
         MATCHER.assertCollectionEquals(Arrays.asList(MEAL3, MEAL2, MEAL1),
                 service.getBetweenDates(LocalDate.of(2015, Month.MAY, 30), LocalDate.of(2015, Month.MAY, 30), USER_ID));
     }
+    @Test
+    public void testGetWithUser() throws Exception{
+        UserMeal item = service.getWithUser(MEAL1_ID, USER_ID);
+        MATCHER.assertEquals(ADMIN_MEAL,item);
+
+    }
+    @Test(expected = NotFoundException.class)
+    public void testGetWithUserNotFound() throws Exception{
+        service.getWithUser(MEAL1_ID,ADMIN_ID);
+    }
 }

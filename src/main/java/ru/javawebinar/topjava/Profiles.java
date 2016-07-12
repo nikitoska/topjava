@@ -13,5 +13,6 @@ public class Profiles {
             DATAJPA = "datajpa";
 
     public static final String ACTIVE_DB = POSTGRES;
+    public static final String DB_INPLEMENTATION = DATAJPA;
 
 }

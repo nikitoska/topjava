@@ -68,6 +68,11 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public User getWithMeals(int id) {
+        return null;
+    }
+
+    @Override
     public User getByEmail(String email) {
         Assert.notNull(email, "email must not be null");
         return repository.values().stream()

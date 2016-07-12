@@ -48,4 +48,9 @@ public class UserMealServiceImpl implements UserMealService {
     public UserMeal save(UserMeal meal, int userId) {
         return repository.save(meal, userId);
     }
+
+    @Override
+    public UserMeal getWithUser(int id, int userId) {
+        return ExceptionUtil.checkNotFoundWithId(repository.getWithUser(id,userId),id);
+    }
 }
