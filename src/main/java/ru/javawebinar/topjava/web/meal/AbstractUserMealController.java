@@ -19,12 +19,12 @@ import java.util.List;
  * GKislin
  * 06.03.2015.
  */
-@Controller
-public class UserMealRestController {
-    private static final Logger LOG = LoggerFactory.getLogger(UserMealRestController.class);
+
+public class AbstractUserMealController {
+    protected static final Logger LOG = LoggerFactory.getLogger(AbstractUserMealController.class);
 
     @Autowired
-    private UserMealService service;
+    protected UserMealService service;
 
     public UserMeal get(int id) {
         int userId = AuthorizedUser.id();
