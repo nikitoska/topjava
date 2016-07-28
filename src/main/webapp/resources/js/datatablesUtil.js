@@ -5,18 +5,27 @@ function makeEditable() {
     });
 
     $('.delete').click(function () {
-        deleteRow($(this).attr("id"));
+        deleteRow($(this).closest("tr").attr("id"));
+  //      datatableApi.row($(this).parents('tr')).remove().draw();
     });
 
     $('#detailsForm').submit(function () {
         save();
         return false;
     });
+    
+    $('#filterForm').submit(function () {
+        updateTable();
+        return false;
+        
+    })
 
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(event, jqXHR, options, jsExc);
     });
 }
+
+
 
 function deleteRow(id) {
     $.ajax({
@@ -28,16 +37,15 @@ function deleteRow(id) {
         }
     });
 }
+function updateTableByData(data) {
+    datatableApi.clear();
+       $.each(data, function (key, item) {
+              datatableApi.row.add(item);
+          });
+      datatableApi.draw();
 
-function updateTable() {
-    $.get(ajaxUrl, function (data) {
-        datatableApi.fnClearTable();
-        $.each(data, function (key, item) {
-            datatableApi.fnAddData(item);
-        });
-        datatableApi.fnDraw();
-    });
 }
+
 
 function save() {
     var form = $('#detailsForm');

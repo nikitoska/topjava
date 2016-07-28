@@ -12,13 +12,13 @@
     <div class="jumbotron">
         <div class="container">
 
-    <form class="form-horizontal" method="post" action="meals/filter" >
+    <form class="form-horizontal" method="post" id="filterForm">
 
 
             <div class="form-group">
                 <label  class="col-sm-2 control-label">From Date</label>
                 <div class="col-sm-2">
-            <input type="date" name="startDate" value="${startDate}" class="form-control">
+            <input type="date" name="startDate" id = "startDate" class="form-control">
                 </div>
                 </div>
 
@@ -27,20 +27,20 @@
         <div class="form-group">
             <label  class="col-sm-2 control-label">To Date</label>
             <div class="col-sm-2">
-            <input type="date" name="endDate" value="${endDate}" class="form-control">
+            <input type="date" name="endDate" id="endDate" class="form-control">
                 </div>
             </div>
         <div class="form-group">
             <label  class="col-sm-2 control-label">From Time</label>
             <div class="col-sm-2">
-            <input type="time" name="startTime" value="${startTime}" class="form-control">
+            <input type="time" name="startTime" id="startTime" class="form-control">
         </div>
             </div>
 
         <div class="form-group">
             <label  class="col-sm-2 control-label">To Time</label>
             <div class="col-sm-2">
-            <input type="time" name="endTime" value="${endTime}" class="form-control">
+            <input type="time" name="endTime" id="endTime" class="form-control">
                 </div>
             </div>
         <div class="col-sm-offset-2 col-sm-10">
@@ -68,7 +68,7 @@
         </thead>
         <c:forEach items="${mealList}" var="meal">
             <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.UserMealWithExceed"/>
-            <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
+            <tr class="${meal.exceed ? 'exceeded' : 'normal'}" id="${meal.id}">
                 <td>
                         <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
                         <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
@@ -76,8 +76,8 @@
                 </td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
-                <td><a class="btn btn-xs btn-primary edit" id="${meal.id}">Update</a></td>
-                <td><a class="btn btn-xs btn-danger delete" id="${meal.id}">Delete</a></td>
+                <td><a class="btn btn-xs btn-primary edit" >Update</a></td>
+                <td><a class="btn btn-xs btn-danger delete" >Delete</a></td>
             </tr>
         </c:forEach>
     </table>
@@ -139,22 +139,33 @@
 <script type="text/javascript" src="resources/js/datatablesUtil.js"></script>
 <script type="text/javascript">
     var ajaxUrl = 'ajax/profile/meals/';
-    var datatableApi;
 
+    var datatableApi;
+    function updateTable() {
+        $.ajax({
+            type: "POST",
+            url: ajaxUrl + 'filter',
+            data: $('#filterForm').serialize(),
+            success: function (data) {
+                updateTableByData(data);
+            }
+        });
+        return false;
+    }
     // $(document).ready(function () {
     $(function () {
-        datatableApi = $('#datatable').dataTable({
-            "bPaginate": false,
-            "bInfo": false,
-            "aoColumns": [
+        datatableApi = $('#datatable').DataTable({
+            "paging": false,
+            "info": false,
+            "columns": [
                 {
-                    "mData": "dateTime"
+                    "data": "dateTime"
                 },
                 {
-                    "mData": "description"
+                    "data": "description"
                 },
                 {
-                    "mData": "calories"
+                    "data": "calories"
                 },
 
                 {
@@ -166,7 +177,7 @@
                     "bSortable": false
                 }
             ],
-            "aaSorting": [
+            "order": [
                 [
                     0,
                     "asc"
