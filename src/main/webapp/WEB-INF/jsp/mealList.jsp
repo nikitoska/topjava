@@ -20,26 +20,26 @@
                         <label class="control-label col-sm-2" for="startDate">From Date:</label>
 
                         <div class="col-sm-2">
-                            <input type="date" name="startDate" id="startDate">
+                            <input type="text" name="startDate" id="startDate">
                         </div>
 
                         <label class="control-label col-sm-2" for="endDate">To Date:</label>
 
                         <div class="col-sm-2">
-                            <input type="date" name="endDate" id="endDate">
+                            <input type="text" name="endDate" id="endDate">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="startTime">From Time:</label>
 
                         <div class="col-sm-2">
-                            <input type="time" name="startTime" id="startTime">
+                            <input type="text" name="startTime" id="startTime">
                         </div>
 
                         <label class="control-label col-sm-2" for="endTime">To Time:</label>
 
                         <div class="col-sm-2">
-                            <input type="time" name="endTime" id="endTime">
+                            <input type="text" name="endTime" id="endTime">
                         </div>
                     </div>
                     <div class="form-group">
@@ -95,7 +95,7 @@
                         <label for="dateTime" class="control-label col-xs-3">Date</label>
 
                         <div class="col-xs-9">
-                            <input type="datetime-local" class="form-control" id="dateTime"
+                            <input class="form-control" id="dateTime"
                                    name="dateTime" placeholder="Date">
                         </div>
                     </div>
@@ -129,11 +129,30 @@
 <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="webjars/datetimepicker/2.4.7/build/jquery.datetimepicker.full.min.js"></script>
+<link rel="stylesheet" type="text/css" href="webjars/datetimepicker/2.4.7/jquery.datetimepicker.css"/>
 <script type="text/javascript" src="webjars/noty/2.3.8/js/noty/packaged/jquery.noty.packaged.min.js"></script>
 <script type="text/javascript" src="resources/js/datatablesUtil.js"></script>
 <script type="text/javascript">
     var ajaxUrl = 'ajax/profile/meals/';
     var datatableApi;
+
+    $('#startDate,#endDate').datetimepicker({
+        timepicker:false,
+        format:'Y-m-d',
+        lang: 'ru'
+    });
+    $('#startTime, #endTime').datetimepicker({
+        datepicker:false,
+        format:'H:i',
+        lang: 'ru'
+
+    });
+    $('#dateTime').datetimepicker({
+        format: 'Y-m-d H:i',
+        lang: 'ru'
+    });
+
 
     function updateTable() {
         $.ajax({
